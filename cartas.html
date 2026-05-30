@@ -25,12 +25,12 @@
     --muted: #415364;
   }
   body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
+ 
   nav { background: var(--navy); height: 60px; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
   .nav-brand { color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 10px; }
   .nav-brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
   .nav-right { font-size: 11px; color: #758592; font-family: 'IBM Plex Mono', monospace; }
-
+ 
   .hero { background: var(--navy); padding: 24px 28px 36px; }
   .hero h1 { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
   .hero p { color: #758592; font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
@@ -41,24 +41,24 @@
   .stat-n.amber { color: #ffb84d; }
   .stat-n.green { color: #69d97a; }
   .stat-l { color: #758592; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; }
-
+ 
   .main { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
-
+ 
   .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
   .search-wrap { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; flex: 1; min-width: 200px; }
   .search-wrap input { border: none; outline: none; font-family: 'Sora', sans-serif; font-size: 13px; color: var(--text); background: none; width: 100%; }
-
+ 
   .btn-primary { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Sora', sans-serif; transition: background 0.15s; }
   .btn-primary:hover { background: var(--navy-light); }
   .btn-sec { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Sora', sans-serif; }
   .btn-sec:hover { background: var(--grey-light); }
   .btn-danger { background: var(--red-light); color: var(--red); border: 1px solid #f5b8b8; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Sora', sans-serif; }
   .btn-success { background: var(--green-light); color: var(--green); border: 1px solid #a5d6a7; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Sora', sans-serif; }
-
+ 
   .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 4px; width: fit-content; }
   .tab { padding: 7px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; color: var(--muted); border: none; background: none; font-family: 'Sora', sans-serif; font-weight: 500; transition: all 0.15s; }
   .tab.active { background: var(--navy); color: #fff; }
-
+ 
   /* CARDS */
   .cards { display: flex; flex-direction: column; gap: 10px; }
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; border-left: 4px solid var(--border); transition: box-shadow 0.15s; }
@@ -66,7 +66,7 @@
   .card.urgente { border-left-color: var(--red); }
   .card.en-proceso { border-left-color: var(--amber); }
   .card.resuelta { border-left-color: var(--green); }
-
+ 
   .card-head { padding: 14px 16px 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
   .card-info { flex: 1; min-width: 0; }
   .alumno-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
@@ -74,58 +74,58 @@
   .solicitud-text { font-size: 13px; color: var(--text); line-height: 1.5; margin-bottom: 6px; font-weight: 500; }
   .obs-text { font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 6px; padding: 8px 10px; line-height: 1.5; }
   .card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
-
+ 
   /* BADGES */
   .badge { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
   .badge-pendiente { background: var(--amber-light); color: var(--amber); }
   .badge-proceso { background: var(--grey-light); color: var(--grey); }
   .badge-aprobada { background: var(--green-light); color: var(--green); }
   .badge-rechazada { background: var(--red-light); color: var(--red); }
-
+ 
   /* ALERTA REPROBADAS */
   .rep-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--red-light); color: var(--red); }
-
+ 
   /* ESTADO SELECT */
   .estado-select { font-family: 'Sora', sans-serif; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; background: var(--surface); color: var(--text); cursor: pointer; outline: none; }
   .estado-select:focus { border-color: var(--navy); }
-
+ 
   /* EXPAND */
   .card-expand-btn { width: 100%; background: var(--bg); border: none; border-top: 1px solid var(--border); padding: 8px 16px; font-size: 12px; color: var(--muted); cursor: pointer; text-align: left; font-family: 'Sora', sans-serif; display: flex; align-items: center; gap: 6px; }
   .card-expand-btn:hover { background: var(--grey-light); }
   .card-detail { display: none; padding: 14px 16px; border-top: 1px solid var(--border); background: #fafafa; }
   .card-detail.open { display: block; }
-
+ 
   /* BOTTOM ACTIONS */
   .card-bottom { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; background: var(--surface); }
   .act { font-size: 12px; padding: 5px 12px; border-radius: 6px; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: 'Sora', sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
   .act:hover { background: var(--grey-light); }
   .act-mail { color: var(--navy); border-color: var(--navy-light); }
-
+ 
   /* COMMENT */
   .comment-box { background: #fffde7; border: 1px solid #ffe082; border-radius: 6px; padding: 8px 12px; font-size: 12px; color: #5d4037; margin-top: 10px; line-height: 1.5; }
-
+ 
   /* RESULT FIELD */
   .resultado-wrap { margin-top: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .resultado-label { font-size: 12px; font-weight: 600; color: var(--muted); }
   .resultado-select { font-family: 'Sora', sans-serif; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; background: var(--surface); color: var(--text); cursor: pointer; outline: none; }
   .resultado-select.aprobada { background: var(--green-light); color: var(--green); border-color: #a5d6a7; }
   .resultado-select.rechazada { background: var(--red-light); color: var(--red); border-color: #f5b8b8; }
-
+ 
   /* OBS EDITABLE */
   .obs-edit { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-family: 'Sora', sans-serif; font-size: 12px; color: var(--text); background: var(--surface); resize: vertical; min-height: 60px; outline: none; margin-top: 8px; }
   .obs-edit:focus { border-color: var(--navy); }
-
+ 
   /* LOADING / EMPTY */
   .loading { display: flex; align-items: center; gap: 10px; padding: 32px 0; color: var(--muted); font-size: 13px; }
   .spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .empty { text-align: center; padding: 48px 20px; color: var(--muted); }
   .empty .ico { font-size: 40px; margin-bottom: 10px; }
-
+ 
   /* TOAST */
   .toast { position: fixed; bottom: 24px; right: 24px; background: var(--navy); color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 13px; z-index: 999; opacity: 0; transform: translateY(8px); transition: all 0.3s; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateY(0); }
-
+ 
   /* MODAL */
   .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; }
   .modal-bg.open { display: flex; }
@@ -138,18 +138,18 @@
   .form-group textarea { resize: vertical; min-height: 70px; }
   .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
   .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); line-height: 1; }
-
+ 
   /* EMAIL MODAL */
   #modal-email textarea { min-height: 120px; }
-
+ 
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 </style>
 </head>
 <body>
-
+ 
 <input type="hidden" id="pa-url" value="https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d2a53d38ffba45729f756979a20fea98/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v_hz0d9G0WAT3nGMDaCOHAaP6oDM0eJ67FXIPwq__6Q">
-
+ 
 <nav>
   <div class="nav-brand">
     <div class="dot"></div>
@@ -157,7 +157,7 @@
   </div>
   <div class="nav-right"></div>
 </nav>
-
+ 
 <div class="hero">
   <h1>Cartas al Consejo</h1>
   <p>Facultad de Ciencias Económicas y Empresariales</p>
@@ -165,7 +165,7 @@
     <div class="stat"><div class="stat-n">—</div><div class="stat-l">Total</div></div>
   </div>
 </div>
-
+ 
 <div class="main">
   <div class="toolbar">
     <div class="search-wrap">
@@ -177,7 +177,7 @@
     <button class="btn-sec" onclick="diagnostico()" title="Ver respuesta raw del flujo">🔍 Diagnóstico</button>
     <a href="https://universidaduandes.sharepoint.com/sites/CoordinacinAcadmica137/Lists/CARTA%20CONSEJO%20INGRESO/Cartas_pendientes.aspx?viewid=641f13a5-ed03-4b84-8cba-1267b5064f67" target="_blank" class="btn-sec">↗ SharePoint</a>
   </div>
-
+ 
   <div id="tab-section" style="display:none">
     <div class="tabs">
       <button class="tab active" onclick="filterTab('todos',this)">Todas</button>
@@ -185,12 +185,12 @@
       <button class="tab" onclick="filterTab('terminada',this)">Terminadas</button>
     </div>
   </div>
-
+ 
   <div id="cards-area">
     <div class="empty"><div class="ico">📋</div><p>Haz clic en "Cargar cartas" para obtener los datos desde SharePoint</p></div>
   </div>
 </div>
-
+ 
 <!-- MODAL EMAIL -->
 <div class="modal-bg" id="modal-email">
   <div class="modal">
@@ -207,7 +207,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- MODAL NUEVA CARTA -->
 <div class="modal-bg" id="modal-new">
   <div class="modal">
@@ -238,16 +238,16 @@
     </div>
   </div>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <script>
 let allData = [];
 let currentFilter = 'todos';
 let emailItemId = null;
-
+ 
 function paUrl() { return document.getElementById('pa-url').value.trim(); }
-
+ 
 async function callPA(body) {
   const res = await fetch(paUrl(), {
     method: 'POST',
@@ -266,20 +266,20 @@ async function callPA(body) {
   }
   return bodyData;
 }
-
+ 
 function showToast(msg, dur = 3000) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), dur);
 }
-
+ 
 async function loadData() {
   const btn = document.getElementById('btn-load');
   btn.disabled = true; btn.textContent = 'Cargando…';
   document.getElementById('cards-area').innerHTML = '<div class="loading"><div class="spinner"></div>Conectando con SharePoint…</div>';
   try {
     const raw = await callPA({ accion: 'leer' });
-
+ 
     // PA puede devolver los datos en distintos niveles — los buscamos en todos
     let items = [];
     if (Array.isArray(raw)) {
@@ -295,7 +295,7 @@ async function loadData() {
       const found = Object.values(raw || {}).find(v => Array.isArray(v));
       if (found) items = found;
     }
-
+ 
     if (!items.length) {
       document.getElementById('cards-area').innerHTML = `
         <div class="empty">
@@ -306,23 +306,23 @@ async function loadData() {
         </div>`;
       return;
     }
-
+ 
     allData = items.map(item => ({
       ...item,
       _nombre: item['NOMBRE_x0020_COMPLETO'] || `${item.NOMBRE || ''} ${item.APELLIDOS || ''}`.trim(),
       _estado: normalizeEstado(item['ESTADO_x0020_FINAL'] || item.ESTADO || item.Estado || '', item)
     }));
-
+ 
     currentFilter = 'todos';
     // Activar tab "Todas" visualmente
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelector('.tab') && document.querySelectorAll('.tab')[0].classList.add('active');
-
+ 
     updateStats(allData);
     renderCards(sortByName(allData));
     document.getElementById('tab-section').style.display = 'block';
     showToast(`✅ ${allData.length} cartas cargadas`);
-
+ 
   } catch(e) {
     document.getElementById('cards-area').innerHTML = `
       <div class="empty">
@@ -336,7 +336,7 @@ async function loadData() {
     btn.disabled = false; btn.textContent = '↺ Cargar cartas';
   }
 }
-
+ 
 function normalizeEstado(e, item) {
   // Si fecha de respuesta está vacía → En proceso
   const fechaResp = item?.Fechaderespuesta || '';
@@ -345,7 +345,7 @@ function normalizeEstado(e, item) {
   if (s.includes('terminad') || s.includes('finaliz') || s.includes('cerrad') || s.includes('resuelt')) return 'terminada';
   return 'enproceso';
 }
-
+ 
 function estadoInfo(e) {
   const map = {
     enproceso: { label: 'En proceso', cls: 'badge-proceso' },
@@ -353,12 +353,12 @@ function estadoInfo(e) {
   };
   return map[e] || map.enproceso;
 }
-
+ 
 function cardClass(e) {
   if (e === 'terminada') return 'resuelta';
   return 'en-proceso';
 }
-
+ 
 function calcularTiempo(fechaStr) {
   const fecha = new Date(fechaStr);
   const ahora = new Date();
@@ -370,7 +370,7 @@ function calcularTiempo(fechaStr) {
   if (dias < 365) return { texto: `${Math.floor(dias/30)} mes${Math.floor(dias/30)>1?'es':''}`, urgente: true };
   return { texto: `${Math.floor(dias/365)} año${Math.floor(dias/365)>1?'s':''}`, urgente: true };
 }
-
+ 
 function renderCards(data) {
   const area = document.getElementById('cards-area');
   if (!data.length) {
@@ -399,7 +399,7 @@ function renderCards(data) {
     const ei = estadoInfo(item._estado);
     const cc = cardClass(item._estado);
     const resVal = item.RESULTADO || item.Resultado || '';
-
+ 
     return `<div class="card ${cc}" id="card-${id}">
       <!-- CABECERA -->
       <div class="card-head">
@@ -426,10 +426,10 @@ function renderCards(data) {
           </div>` : ''}
         </div>
       </div>
-
+ 
       <!-- DIVISOR -->
       <div style="height:1px;background:var(--border);margin:0 16px"></div>
-
+ 
       <!-- CAMPOS -->
       <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
         <div>
@@ -447,7 +447,7 @@ function renderCards(data) {
           <textarea id="cons-${id}" placeholder="Agregar resolución del consejo..." style="width:100%;font-size:12px;background:#243746;border:1px solid transparent;border-radius:6px;padding:8px 12px;color:#fff;line-height:1.5;font-family:'Sora',sans-serif;resize:vertical;min-height:52px;outline:none;transition:border 0.15s" onfocus="this.style.borderColor='#758592'" onblur="this.style.borderColor='transparent'">${consejo === '—' ? '' : consejo}</textarea>
         </div>
       </div>
-
+ 
       <!-- FOOTER -->
       <div style="border-top:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;align-items:center;background:var(--surface);border-radius:0 0 10px 10px">
         ${email ? `<button class="act act-mail" onclick="openEmailModal('${id}','${email}','${nombre.replace(/'/g,"\\'")}')">✉ Correo</button>` : ''}
@@ -457,7 +457,7 @@ function renderCards(data) {
     </div>`;
   }).join('') + '</div>';
 }
-
+ 
 async function guardarTarjeta(id) {
   const btn = document.getElementById('btn-save-' + id);
   const obsVal = document.getElementById('obs-' + id)?.value || '';
@@ -478,7 +478,7 @@ async function guardarTarjeta(id) {
     showToast('⚠ Error al guardar: ' + e.message);
   }
 }
-
+ 
 function toggleDetail(id) {
   const d = document.getElementById('detail-' + id);
   const ico = document.getElementById('icon-' + id);
@@ -486,7 +486,7 @@ function toggleDetail(id) {
   d.classList.toggle('open');
   ico.textContent = isOpen ? '▶' : '▼';
 }
-
+ 
 async function updateEstado(id, nuevoEstado, sel) {
   const item = allData.find(x => String(x.id || x.ID || x.Id) === String(id));
   const estadoLabels = { enproceso: 'En proceso', terminada: 'Terminada' };
@@ -504,7 +504,7 @@ async function updateEstado(id, nuevoEstado, sel) {
     showToast('⚠ Error: ' + e.message);
   }
 }
-
+ 
 async function saveEdit(id, campo, valor) {
   try {
     await callPA({ accion: 'actualizar', id: parseInt(id), campo, valor });
@@ -512,7 +512,7 @@ async function saveEdit(id, campo, valor) {
     showToast('⚠ Error al guardar: ' + e.message);
   }
 }
-
+ 
 function openEmailModal(id, email, nombre) {
   emailItemId = id;
   document.getElementById('em-to').value = email || '';
@@ -520,11 +520,11 @@ function openEmailModal(id, email, nombre) {
     `Estimado/a ${nombre},\n\nNos comunicamos con usted respecto a su carta enviada al Consejo de la Facultad.\n\n[Agregar resolución aquí]\n\nSaludos cordiales,\nDirección de Estudios\nFacultad de Ciencias Económicas y Empresariales · Uandes`;
   document.getElementById('modal-email').classList.add('open');
 }
-
+ 
 function closeEmailModal() {
   document.getElementById('modal-email').classList.remove('open');
 }
-
+ 
 async function sendEmail() {
   const to = document.getElementById('em-to').value.trim();
   const asunto = document.getElementById('em-asunto').value.trim();
@@ -538,14 +538,14 @@ async function sendEmail() {
     showToast('⚠ Error al enviar: ' + e.message);
   }
 }
-
+ 
 function openNewModal() {
   document.getElementById('modal-new').classList.add('open');
 }
 function closeNewModal() {
   document.getElementById('modal-new').classList.remove('open');
 }
-
+ 
 async function saveNew() {
   const nombre = document.getElementById('nw-nombre').value.trim();
   const apellidos = document.getElementById('nw-apellidos').value.trim();
@@ -572,7 +572,7 @@ async function saveNew() {
     showToast('⚠ Error: ' + e.message);
   }
 }
-
+ 
 function updateStats(data) {
   const proc = data.filter(d => d._estado === 'enproceso').length;
   const term = data.filter(d => d._estado === 'terminada').length;
@@ -583,11 +583,11 @@ function updateStats(data) {
   ].map(([n, l, c]) => `<div class="stat"><div class="stat-n ${c}">${n}</div><div class="stat-l">${l}</div></div>`).join('');
   document.getElementById('tab-section').style.display = 'block';
 }
-
+ 
 function sortByName(arr) {
   return [...arr].sort((a, b) => (a._nombre || '').localeCompare(b._nombre || '', 'es'));
 }
-
+ 
 function applySearch() {
   const sv = document.getElementById('search-val').value.trim().toLowerCase();
   let items = sv ? allData.filter(i =>
@@ -600,7 +600,7 @@ function applySearch() {
   }
   renderCards(sortByName(items));
 }
-
+ 
 function filterTab(estado, el) {
   currentFilter = estado;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -608,7 +608,7 @@ function filterTab(estado, el) {
   const filtered = estado === 'todos' ? allData : allData.filter(d => d._estado === estado);
   renderCards(sortByName(filtered));
 }
-
+ 
 async function diagnostico() {
   const area = document.getElementById('cards-area');
   area.innerHTML = '<div class="loading"><div class="spinner"></div>Llamando al flujo…</div>';
@@ -628,7 +628,7 @@ async function diagnostico() {
     area.innerHTML = `<div class="empty"><div class="ico">⚠️</div><p style="color:#CE0019">${e.message}</p></div>`;
   }
 }
-
+ 
 function loadDemo() {
   allData = [
     {id:1,_nombre:'Borja Velasco Swinburn',SOLICITUD:'Eximirse de intercambio obligatorio por motivos económicos','OBSERVACI\u00d3N':'En otras oportunidades hemos autorizado excepciones por razones económicas acreditadas',PGA:5.12,'N\u00b0 REP':1,CARRERA:'Int. Business',INGRESO:'202210',_estado:'enproceso','ESTADO_x0020_FINAL':'En proceso','E_x002d_MAIL':'bvelasco@miuandes.cl'},
