@@ -310,7 +310,8 @@ let allData = [];
 let currentFilter = 'todos';
 let emailItemId = null;
  
-function paUrl() { return document.getElementById('pa-url').value.trim(); }
+const PA_URL = 'https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d2a53d38ffba45729f756979a20fea98/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v_hz0d9G0WAT3nGMDaCOHAaP6oDM0eJ67FXIPwq__6Q';
+function paUrl() { return PA_URL; }
  
 async function callPA(body) {
   const res = await fetch(paUrl(), {
@@ -706,6 +707,3 @@ function loadDemo() {
 </script>
 </body>
 </html>
- 
-
-
