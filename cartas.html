@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cartas al Consejo — Facultad de Ciencias Económicas y Empresariales</title>
+<title>Cartas al Consejo — Dirección de Alumnos · Uandes</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -148,12 +148,56 @@
 </head>
 <body>
  
-<input type="hidden" id="pa-url" value="https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d2a53d38ffba45729f756979a20fea98/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v_hz0d9G0WAT3nGMDaCOHAaP6oDM0eJ67FXIPwq__6Q">
+<style>
+  #login-screen {
+    position: fixed; inset: 0; background: #131E29;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 999; flex-direction: column; gap: 20px;
+  }
+  #login-screen.hidden { display: none; }
+  .login-box {
+    background: #243746; border-radius: 14px;
+    padding: 36px 32px; width: 320px; text-align: center;
+  }
+  .login-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 24px; }
+  .login-dot { width: 10px; height: 10px; border-radius: 50%; background: #CE0019; }
+  .login-title { color: #fff; font-size: 20px; font-weight: 700; }
+  .login-sub { color: #758592; font-size: 12px; margin-bottom: 24px; }
+  .login-input {
+    width: 100%; padding: 12px 16px; border-radius: 8px;
+    border: 1px solid #415364; background: #131E29;
+    color: #fff; font-family: 'Sora', sans-serif; font-size: 15px;
+    outline: none; text-align: center; letter-spacing: 4px;
+    margin-bottom: 14px;
+  }
+  .login-input:focus { border-color: #758592; }
+  .login-btn {
+    width: 100%; padding: 12px; border-radius: 8px;
+    background: #CE0019; color: #fff; border: none;
+    font-family: 'Sora', sans-serif; font-size: 14px;
+    font-weight: 600; cursor: pointer;
+  }
+  .login-btn:hover { background: #a80014; }
+  .login-error { color: #ff6b6b; font-size: 12px; margin-top: 8px; display: none; }
+</style>
+ 
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-dot"></div>
+      <div class="login-title">Dirección de Alumnos</div>
+    </div>
+    <div class="login-sub">Cartas Consejo · Uandes</div>
+    <input type="password" class="login-input" id="login-input" placeholder="••••••" onkeydown="if(event.key==='Enter')checkLogin()">
+    <button class="login-btn" onclick="checkLogin()">Ingresar</button>
+    <div class="login-error" id="login-error">Clave incorrecta</div>
+  </div>
+</div> value="https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d2a53d38ffba45729f756979a20fea98/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v_hz0d9G0WAT3nGMDaCOHAaP6oDM0eJ67FXIPwq__6Q">
  
 <nav>
   <div class="nav-brand">
     <div class="dot"></div>
-    Cartas al Consejo
+    Dirección de Alumnos
   </div>
   <div class="nav-right"></div>
 </nav>
@@ -242,6 +286,25 @@
 <div class="toast" id="toast"></div>
  
 <script>
+const APP_PASSWORD = 'Cartas2026';
+ 
+function checkLogin() {
+  const val = document.getElementById('login-input').value;
+  if (val === APP_PASSWORD) {
+    sessionStorage.setItem('dia-auth', '1');
+    document.getElementById('login-screen').classList.add('hidden');
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-input').value = '';
+    document.getElementById('login-input').focus();
+  }
+}
+ 
+// Auto-check si ya estaba autenticada en esta sesión
+if (sessionStorage.getItem('dia-auth') === '1') {
+  document.getElementById('login-screen').classList.add('hidden');
+}
+ 
 let allData = [];
 let currentFilter = 'todos';
 let emailItemId = null;
@@ -578,67 +641,3 @@ function updateStats(data) {
   const term = data.filter(d => d._estado === 'terminada').length;
   document.getElementById('stats').innerHTML = [
     [data.length, 'Total', ''],
-    [proc, 'En proceso', 'amber'],
-    [term, 'Terminadas', 'green'],
-  ].map(([n, l, c]) => `<div class="stat"><div class="stat-n ${c}">${n}</div><div class="stat-l">${l}</div></div>`).join('');
-  document.getElementById('tab-section').style.display = 'block';
-}
- 
-function sortByName(arr) {
-  return [...arr].sort((a, b) => (a._nombre || '').localeCompare(b._nombre || '', 'es'));
-}
- 
-function applySearch() {
-  const sv = document.getElementById('search-val').value.trim().toLowerCase();
-  let items = sv ? allData.filter(i =>
-    (i._nombre || '').toLowerCase().includes(sv) ||
-    (i.SOLICITUD || '').toLowerCase().includes(sv) ||
-    (i.CARRERA?.Value || i.CARRERA || '').toLowerCase().includes(sv)
-  ) : allData;
-  if (currentFilter !== 'todos') {
-    items = items.filter(d => d._estado === currentFilter);
-  }
-  renderCards(sortByName(items));
-}
- 
-function filterTab(estado, el) {
-  currentFilter = estado;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  const filtered = estado === 'todos' ? allData : allData.filter(d => d._estado === estado);
-  renderCards(sortByName(filtered));
-}
- 
-async function diagnostico() {
-  const area = document.getElementById('cards-area');
-  area.innerHTML = '<div class="loading"><div class="spinner"></div>Llamando al flujo…</div>';
-  try {
-    const raw = await callPA({ accion: 'leer' });
-    const preview = JSON.stringify(raw, null, 2).slice(0, 2000);
-    area.innerHTML = `
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px">
-        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Respuesta raw del flujo PA:</div>
-        <pre style="font-size:11px;font-family:'IBM Plex Mono',monospace;background:#f4f4f4;padding:12px;border-radius:6px;overflow-x:auto;white-space:pre-wrap;max-height:400px;overflow-y:auto">${preview}</pre>
-        <div style="margin-top:12px;display:flex;gap:8px">
-          <button class="btn-primary" onclick="loadData()">↺ Cargar cartas</button>
-          <button class="btn-sec" onclick="loadDemo()">Ver ejemplo</button>
-        </div>
-      </div>`;
-  } catch(e) {
-    area.innerHTML = `<div class="empty"><div class="ico">⚠️</div><p style="color:#CE0019">${e.message}</p></div>`;
-  }
-}
- 
-function loadDemo() {
-  allData = [
-    {id:1,_nombre:'Borja Velasco Swinburn',SOLICITUD:'Eximirse de intercambio obligatorio por motivos económicos','OBSERVACI\u00d3N':'En otras oportunidades hemos autorizado excepciones por razones económicas acreditadas',PGA:5.12,'N\u00b0 REP':1,CARRERA:'Int. Business',INGRESO:'202210',_estado:'enproceso','ESTADO_x0020_FINAL':'En proceso','E_x002d_MAIL':'bvelasco@miuandes.cl'},
-    {id:2,_nombre:'Pedro Agüero Ureta',SOLICITUD:'Autorización intercambio sin cumplir requisito','OBSERVACI\u00d3N':'Hemos solicitado que postulen cuando cumplan los requisitos',PGA:4.49,'N\u00b0 REP':7,CARRERA:'Ing. Comercial',INGRESO:'202210',_estado:'enproceso','ESTADO_x0020_FINAL':'En proceso','E_x002d_MAIL':'paguero@miuandes.cl'},
-    {id:3,_nombre:'María Jara Verdugo',SOLICITUD:'Rendir 3 exámenes en días diferentes','OBSERVACI\u00d3N':'No hemos tenido caso similar',PGA:5.01,'N\u00b0 REP':1,CARRERA:'Ing. Comercial',INGRESO:'202410',_estado:'terminada','ESTADO_x0020_FINAL':'Terminada','E_x002d_MAIL':'mjara@miuandes.cl'},
-  ];
-  updateStats(allData);
-  renderCards(sortByName(allData));
-  showToast('📋 Mostrando datos de ejemplo');
-}
-</script>
-</body>
-</html>
