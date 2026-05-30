@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartas al Consejo — Facultad de Ciencias Económicas y Empresariales</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #131E29;
+    --navy-light: #243746;
+    --red: #CE0019;
+    --red-light: #fdeaea;
+    --amber: #c4821a;
+    --amber-light: #fdf3e3;
+    --green: #2e7d32;
+    --green-light: #e8f5e9;
+    --grey: #415364;
+    --grey-light: #e4e9ed;
+    --bg: #eef0f2;
+    --surface: #fff;
+    --border: #c8cfd6;
+    --text: #131E29;
+    --muted: #415364;
+  }
+  body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  nav { background: var(--navy); height: 60px; padding: 0 28px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+  .nav-brand { color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+  .nav-brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+  .nav-right { font-size: 11px; color: #758592; font-family: 'IBM Plex Mono', monospace; }
+
+  .hero { background: var(--navy); padding: 24px 28px 36px; }
+  .hero h1 { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { color: #758592; font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+  .stats { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 18px; min-width: 100px; }
+  .stat-n { color: #fff; font-size: 24px; font-weight: 700; }
+  .stat-n.red { color: #ff6b6b; }
+  .stat-n.amber { color: #ffb84d; }
+  .stat-n.green { color: #69d97a; }
+  .stat-l { color: #758592; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 24px 20px; }
+
+  .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+  .search-wrap { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; flex: 1; min-width: 200px; }
+  .search-wrap input { border: none; outline: none; font-family: 'Sora', sans-serif; font-size: 13px; color: var(--text); background: none; width: 100%; }
+
+  .btn-primary { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Sora', sans-serif; transition: background 0.15s; }
+  .btn-primary:hover { background: var(--navy-light); }
+  .btn-sec { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Sora', sans-serif; }
+  .btn-sec:hover { background: var(--grey-light); }
+  .btn-danger { background: var(--red-light); color: var(--red); border: 1px solid #f5b8b8; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Sora', sans-serif; }
+  .btn-success { background: var(--green-light); color: var(--green); border: 1px solid #a5d6a7; border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Sora', sans-serif; }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 4px; width: fit-content; }
+  .tab { padding: 7px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; color: var(--muted); border: none; background: none; font-family: 'Sora', sans-serif; font-weight: 500; transition: all 0.15s; }
+  .tab.active { background: var(--navy); color: #fff; }
+
+  /* CARDS */
+  .cards { display: flex; flex-direction: column; gap: 10px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; border-left: 4px solid var(--border); transition: box-shadow 0.15s; }
+  .card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .card.urgente { border-left-color: var(--red); }
+  .card.en-proceso { border-left-color: var(--amber); }
+  .card.resuelta { border-left-color: var(--green); }
+
+  .card-head { padding: 14px 16px 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .card-info { flex: 1; min-width: 0; }
+  .alumno-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .alumno-meta { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; margin-bottom: 6px; }
+  .solicitud-text { font-size: 13px; color: var(--text); line-height: 1.5; margin-bottom: 6px; font-weight: 500; }
+  .obs-text { font-size: 12px; color: var(--muted); background: var(--bg); border-radius: 6px; padding: 8px 10px; line-height: 1.5; }
+  .card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+
+  /* BADGES */
+  .badge { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .badge-pendiente { background: var(--amber-light); color: var(--amber); }
+  .badge-proceso { background: var(--grey-light); color: var(--grey); }
+  .badge-aprobada { background: var(--green-light); color: var(--green); }
+  .badge-rechazada { background: var(--red-light); color: var(--red); }
+
+  /* ALERTA REPROBADAS */
+  .rep-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--red-light); color: var(--red); }
+
+  /* ESTADO SELECT */
+  .estado-select { font-family: 'Sora', sans-serif; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; background: var(--surface); color: var(--text); cursor: pointer; outline: none; }
+  .estado-select:focus { border-color: var(--navy); }
+
+  /* EXPAND */
+  .card-expand-btn { width: 100%; background: var(--bg); border: none; border-top: 1px solid var(--border); padding: 8px 16px; font-size: 12px; color: var(--muted); cursor: pointer; text-align: left; font-family: 'Sora', sans-serif; display: flex; align-items: center; gap: 6px; }
+  .card-expand-btn:hover { background: var(--grey-light); }
+  .card-detail { display: none; padding: 14px 16px; border-top: 1px solid var(--border); background: #fafafa; }
+  .card-detail.open { display: block; }
+
+  /* BOTTOM ACTIONS */
+  .card-bottom { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; background: var(--surface); }
+  .act { font-size: 12px; padding: 5px 12px; border-radius: 6px; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-family: 'Sora', sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .act:hover { background: var(--grey-light); }
+  .act-mail { color: var(--navy); border-color: var(--navy-light); }
+
+  /* COMMENT */
+  .comment-box { background: #fffde7; border: 1px solid #ffe082; border-radius: 6px; padding: 8px 12px; font-size: 12px; color: #5d4037; margin-top: 10px; line-height: 1.5; }
+
+  /* RESULT FIELD */
+  .resultado-wrap { margin-top: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .resultado-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+  .resultado-select { font-family: 'Sora', sans-serif; font-size: 12px; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; background: var(--surface); color: var(--text); cursor: pointer; outline: none; }
+  .resultado-select.aprobada { background: var(--green-light); color: var(--green); border-color: #a5d6a7; }
+  .resultado-select.rechazada { background: var(--red-light); color: var(--red); border-color: #f5b8b8; }
+
+  /* OBS EDITABLE */
+  .obs-edit { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-family: 'Sora', sans-serif; font-size: 12px; color: var(--text); background: var(--surface); resize: vertical; min-height: 60px; outline: none; margin-top: 8px; }
+  .obs-edit:focus { border-color: var(--navy); }
+
+  /* LOADING / EMPTY */
+  .loading { display: flex; align-items: center; gap: 10px; padding: 32px 0; color: var(--muted); font-size: 13px; }
+  .spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty { text-align: center; padding: 48px 20px; color: var(--muted); }
+  .empty .ico { font-size: 40px; margin-bottom: 10px; }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--navy); color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 13px; z-index: 999; opacity: 0; transform: translateY(8px); transition: all 0.3s; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* MODAL */
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; }
+  .modal-bg.open { display: flex; }
+  .modal { background: var(--surface); border-radius: 12px; padding: 24px; width: 500px; max-width: 95vw; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .form-group label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+  .form-group input, .form-group select, .form-group textarea { padding: 9px 12px; border: 1px solid var(--border); border-radius: 7px; font-family: 'Sora', sans-serif; font-size: 13px; color: var(--text); background: var(--surface); outline: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--navy); }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+  .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); line-height: 1; }
+
+  /* EMAIL MODAL */
+  #modal-email textarea { min-height: 120px; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<input type="hidden" id="pa-url" value="https://defaultb91e1a9b47184623882e6fb655d96b.f0.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d2a53d38ffba45729f756979a20fea98/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v_hz0d9G0WAT3nGMDaCOHAaP6oDM0eJ67FXIPwq__6Q">
+
+<nav>
+  <div class="nav-brand">
+    <div class="dot"></div>
+    Cartas al Consejo
+  </div>
+  <div class="nav-right"></div>
+</nav>
+
+<div class="hero">
+  <h1>Cartas al Consejo</h1>
+  <p>Facultad de Ciencias Económicas y Empresariales</p>
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat-n">—</div><div class="stat-l">Total</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span style="color:var(--muted)">🔍</span>
+      <input type="text" id="search-val" placeholder="Buscar alumno, solicitud..." oninput="applySearch()">
+    </div>
+    <button class="btn-primary" id="btn-load" onclick="loadData()">↺ Cargar cartas</button>
+    <button class="btn-sec" onclick="openNewModal()">+ Nueva carta</button>
+    <button class="btn-sec" onclick="diagnostico()" title="Ver respuesta raw del flujo">🔍 Diagnóstico</button>
+    <a href="https://universidaduandes.sharepoint.com/sites/CoordinacinAcadmica137/Lists/CARTA%20CONSEJO%20INGRESO/Cartas_pendientes.aspx?viewid=641f13a5-ed03-4b84-8cba-1267b5064f67" target="_blank" class="btn-sec">↗ SharePoint</a>
+  </div>
+
+  <div id="tab-section" style="display:none">
+    <div class="tabs">
+      <button class="tab active" onclick="filterTab('todos',this)">Todas</button>
+      <button class="tab" onclick="filterTab('enproceso',this)">En proceso</button>
+      <button class="tab" onclick="filterTab('terminada',this)">Terminadas</button>
+    </div>
+  </div>
+
+  <div id="cards-area">
+    <div class="empty"><div class="ico">📋</div><p>Haz clic en "Cargar cartas" para obtener los datos desde SharePoint</p></div>
+  </div>
+</div>
+
+<!-- MODAL EMAIL -->
+<div class="modal-bg" id="modal-email">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3>✉ Enviar correo al alumno</h3>
+      <button class="modal-close" onclick="closeEmailModal()">×</button>
+    </div>
+    <div class="form-group"><label>Para</label><input type="email" id="em-to" readonly></div>
+    <div class="form-group"><label>Asunto</label><input type="text" id="em-asunto" value="Resolución carta al consejo — Facultad de Ciencias Económicas"></div>
+    <div class="form-group"><label>Mensaje</label><textarea id="em-body"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn-sec" onclick="closeEmailModal()">Cancelar</button>
+      <button class="btn-primary" onclick="sendEmail()">Enviar ✉</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NUEVA CARTA -->
+<div class="modal-bg" id="modal-new">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h3>+ Nueva carta al consejo</h3>
+      <button class="modal-close" onclick="closeNewModal()">×</button>
+    </div>
+    <div class="form-group"><label>Nombre</label><input type="text" id="nw-nombre" placeholder="Nombre(s)"></div>
+    <div class="form-group"><label>Apellidos</label><input type="text" id="nw-apellidos" placeholder="Apellido Paterno Materno"></div>
+    <div class="form-group"><label>RUT</label><input type="text" id="nw-rut" placeholder="12.345.678-9"></div>
+    <div class="form-group"><label>Email</label><input type="email" id="nw-email" placeholder="alumno@miuandes.cl"></div>
+    <div class="form-group"><label>Carrera</label>
+      <select id="nw-carrera">
+        <option value="">— Seleccionar</option>
+        <option>Ing. Comercial</option>
+        <option>Int. Business</option>
+        <option>Contador Auditor</option>
+        <option>Administración de Empresas</option>
+      </select>
+    </div>
+    <div class="form-group"><label>PGA</label><input type="number" id="nw-pga" step="0.01" min="1" max="7" placeholder="5.00"></div>
+    <div class="form-group"><label>N° Reprobadas</label><input type="number" id="nw-rep" min="0" placeholder="0"></div>
+    <div class="form-group"><label>Solicitud</label><textarea id="nw-solicitud" placeholder="Descripción de lo que pide el alumno..."></textarea></div>
+    <div class="form-group"><label>Observación / Antecedente</label><textarea id="nw-obs" placeholder="Precedentes o contexto relevante para el consejo..."></textarea></div>
+    <div class="modal-footer">
+      <button class="btn-sec" onclick="closeNewModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveNew()">Crear carta</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let allData = [];
+let currentFilter = 'todos';
+let emailItemId = null;
+
+function paUrl() { return document.getElementById('pa-url').value.trim(); }
+
+async function callPA(body) {
+  const res = await fetch(paUrl(), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error(`Error ${res.status}: ${res.statusText}`);
+  const ct = res.headers.get('content-type') || '';
+  if (!ct.includes('application/json')) return {};
+  const json = await res.json();
+  let bodyData = json;
+  if (json && typeof json.body === 'string') {
+    try { bodyData = JSON.parse(json.body.trim()); } catch(e) { bodyData = json; }
+  } else if (json && json.body && typeof json.body === 'object') {
+    bodyData = json.body;
+  }
+  return bodyData;
+}
+
+function showToast(msg, dur = 3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+
+async function loadData() {
+  const btn = document.getElementById('btn-load');
+  btn.disabled = true; btn.textContent = 'Cargando…';
+  document.getElementById('cards-area').innerHTML = '<div class="loading"><div class="spinner"></div>Conectando con SharePoint…</div>';
+  try {
+    const raw = await callPA({ accion: 'leer' });
+
+    // PA puede devolver los datos en distintos niveles — los buscamos en todos
+    let items = [];
+    if (Array.isArray(raw)) {
+      items = raw;
+    } else if (raw?.value && Array.isArray(raw.value)) {
+      items = raw.value;
+    } else if (raw?.body?.value && Array.isArray(raw.body.value)) {
+      items = raw.body.value;
+    } else if (raw?.body && Array.isArray(raw.body)) {
+      items = raw.body;
+    } else {
+      // Intentar encontrar cualquier array en la respuesta
+      const found = Object.values(raw || {}).find(v => Array.isArray(v));
+      if (found) items = found;
+    }
+
+    if (!items.length) {
+      document.getElementById('cards-area').innerHTML = `
+        <div class="empty">
+          <div class="ico">📋</div>
+          <p style="margin-bottom:8px">El flujo respondió pero no devolvió registros.</p>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Verifica que la lista tenga elementos y que el paso "Responder" devuelva <code>outputs('Obtener_elementos')?['body']</code></p>
+          <button class="btn-sec" onclick="loadDemo()">Ver datos de ejemplo</button>
+        </div>`;
+      return;
+    }
+
+    allData = items.map(item => ({
+      ...item,
+      _nombre: item['NOMBRE_x0020_COMPLETO'] || `${item.NOMBRE || ''} ${item.APELLIDOS || ''}`.trim(),
+      _estado: normalizeEstado(item['ESTADO_x0020_FINAL'] || item.ESTADO || item.Estado || '', item)
+    }));
+
+    currentFilter = 'todos';
+    // Activar tab "Todas" visualmente
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.tab') && document.querySelectorAll('.tab')[0].classList.add('active');
+
+    updateStats(allData);
+    renderCards(sortByName(allData));
+    document.getElementById('tab-section').style.display = 'block';
+    showToast(`✅ ${allData.length} cartas cargadas`);
+
+  } catch(e) {
+    document.getElementById('cards-area').innerHTML = `
+      <div class="empty">
+        <div class="ico">⚠️</div>
+        <p style="color:#CE0019;margin-bottom:12px">${e.message}</p>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:16px">Verifica que el flujo de Power Automate esté activo y configurado correctamente.</p>
+        <button class="btn-primary" onclick="loadData()">↺ Reintentar</button>
+        <button class="btn-sec" style="margin-left:8px" onclick="loadDemo()">Ver datos de ejemplo</button>
+      </div>`;
+  } finally {
+    btn.disabled = false; btn.textContent = '↺ Cargar cartas';
+  }
+}
+
+function normalizeEstado(e, item) {
+  // Si fecha de respuesta está vacía → En proceso
+  const fechaResp = item?.Fechaderespuesta || '';
+  if (!fechaResp || fechaResp === '') return 'enproceso';
+  const s = (e || '').toLowerCase().trim();
+  if (s.includes('terminad') || s.includes('finaliz') || s.includes('cerrad') || s.includes('resuelt')) return 'terminada';
+  return 'enproceso';
+}
+
+function estadoInfo(e) {
+  const map = {
+    enproceso: { label: 'En proceso', cls: 'badge-proceso' },
+    terminada:  { label: 'Terminada',  cls: 'badge-aprobada' },
+  };
+  return map[e] || map.enproceso;
+}
+
+function cardClass(e) {
+  if (e === 'terminada') return 'resuelta';
+  return 'en-proceso';
+}
+
+function calcularTiempo(fechaStr) {
+  const fecha = new Date(fechaStr);
+  const ahora = new Date();
+  const dias = Math.floor((ahora - fecha) / (1000 * 60 * 60 * 24));
+  if (dias === 0) return { texto: 'Hoy', urgente: false };
+  if (dias === 1) return { texto: 'Ayer', urgente: false };
+  if (dias < 7) return { texto: `${dias} días`, urgente: false };
+  if (dias < 30) return { texto: `${Math.floor(dias/7)} sem.`, urgente: dias > 14 };
+  if (dias < 365) return { texto: `${Math.floor(dias/30)} mes${Math.floor(dias/30)>1?'es':''}`, urgente: true };
+  return { texto: `${Math.floor(dias/365)} año${Math.floor(dias/365)>1?'s':''}`, urgente: true };
+}
+
+function renderCards(data) {
+  const area = document.getElementById('cards-area');
+  if (!data.length) {
+    area.innerHTML = '<div class="empty"><div class="ico">📋</div><p>No hay cartas para mostrar</p></div>';
+    return;
+  }
+  area.innerHTML = '<div class="cards">' + data.map(item => {
+    const id = item.id || item.ID || item.Id;
+    const rut = item.Title || '—';
+    const nombre = item['NOMBRE_x0020_COMPLETO'] || `${item.NOMBRE || ''} ${item.APELLIDOS || ''}`.trim() || '—';
+    const carrera = item.CARRERA?.Value || item.CARRERA || '';
+    const pga = (item.PGA || '').toString().replace('\t','').trim();
+    const rep = parseInt(item['N_x00b0_DERAMOSREPROBADOS'] || 0);
+    const anioIngreso = item['A_x00f1_oingreso'] || '';
+    const solicitud = item.Requerimiento || '—';
+    const observaciones = item.Observaciones || '—';
+    const consejo = item.OBSCONSEJO || '—';
+    const email = item['E_x002d_MAIL'] || item.Email || item.EMAIL || '';
+    const linkAdjuntos = item.LINKADJUNTOS || '';
+    const fechaIngreso = item.Created || '';
+    const diasEnProceso = item._estado === 'enproceso' && fechaIngreso
+      ? Math.floor((new Date() - new Date(fechaIngreso)) / (1000*60*60*24))
+      : null;
+    const created = item.Created || item.Créate || '';
+    const tiempoTranscurrido = created ? calcularTiempo(created) : '';
+    const ei = estadoInfo(item._estado);
+    const cc = cardClass(item._estado);
+    const resVal = item.RESULTADO || item.Resultado || '';
+
+    return `<div class="card ${cc}" id="card-${id}">
+      <!-- CABECERA -->
+      <div class="card-head">
+        <div class="card-info">
+          <div class="alumno-name">${nombre}</div>
+          <div style="font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);margin-top:1px">${rut}</div>
+          <div style="font-size:12px;font-weight:500;color:var(--text);margin-top:2px">${carrera}</div>
+          <div style="display:inline-grid;grid-template-columns:auto auto;gap:0;background:#f4f6f8;border:1px solid var(--border);border-radius:6px;margin-top:8px;overflow:hidden;font-size:11px;width:fit-content">
+            <div style="padding:3px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:0.07em">PGA</div>
+            <div style="padding:3px 8px;border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--text)">${pga || '—'}</div>
+            <div style="padding:3px 8px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:0.07em">N° Rep.</div>
+            <div style="padding:3px 8px;border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-weight:600;color:${rep > 0 ? 'var(--red)' : 'var(--text)'}">${rep > 0 ? `⚠ ${rep}` : '0'}</div>
+            <div style="padding:3px 8px;border-right:1px solid var(--border);color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:0.07em">Ingreso</div>
+            <div style="padding:3px 8px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--text)">${anioIngreso || '—'}</div>
+          </div>
+        </div>
+        <!-- DERECHA: badge + fecha + días -->
+        <div class="card-right">
+          <span class="badge ${ei.cls}" id="badge-${id}">${ei.label}</span>
+          ${created ? `
+          <div style="margin-top:8px;text-align:right">
+            <div style="font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace">${new Date(created).toLocaleDateString('es-CL',{day:'numeric',month:'short',year:'numeric'})}</div>
+            <div style="margin-top:3px;display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:2px 8px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:${tiempoTranscurrido.urgente?'var(--red)':'var(--muted)'}">⏱ ${tiempoTranscurrido.texto}</div>
+          </div>` : ''}
+        </div>
+      </div>
+
+      <!-- DIVISOR -->
+      <div style="height:1px;background:var(--border);margin:0 16px"></div>
+
+      <!-- CAMPOS -->
+      <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+        <div>
+          <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:3px;font-weight:600">Requerimiento</div>
+          <div style="font-size:12px;color:var(--text);line-height:1.6">${solicitud}</div>
+        </div>
+        <div style="height:1px;background:var(--border)"></div>
+        <div>
+          <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:3px;font-weight:600">Observaciones</div>
+          <textarea id="obs-${id}" placeholder="Agregar observación..." style="width:100%;font-size:12px;background:var(--bg);border:1px solid transparent;border-radius:6px;padding:7px 10px;color:var(--muted);line-height:1.5;font-family:'Sora',sans-serif;resize:vertical;min-height:52px;outline:none;transition:border 0.15s" onfocus="this.style.borderColor='#415364'" onblur="this.style.borderColor='transparent'">${observaciones === '—' ? '' : observaciones}</textarea>
+        </div>
+        <div style="height:1px;background:var(--border)"></div>
+        <div>
+          <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:3px;font-weight:600">Consejo</div>
+          <textarea id="cons-${id}" placeholder="Agregar resolución del consejo..." style="width:100%;font-size:12px;background:#243746;border:1px solid transparent;border-radius:6px;padding:8px 12px;color:#fff;line-height:1.5;font-family:'Sora',sans-serif;resize:vertical;min-height:52px;outline:none;transition:border 0.15s" onfocus="this.style.borderColor='#758592'" onblur="this.style.borderColor='transparent'">${consejo === '—' ? '' : consejo}</textarea>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div style="border-top:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;align-items:center;background:var(--surface);border-radius:0 0 10px 10px">
+        ${email ? `<button class="act act-mail" onclick="openEmailModal('${id}','${email}','${nombre.replace(/'/g,"\\'")}')">✉ Correo</button>` : ''}
+        ${linkAdjuntos ? `<a class="act" href="${linkAdjuntos}" target="_blank">📎 Adjuntos</a>` : ''}
+        <button class="btn-primary" style="margin-left:auto;padding:6px 18px;font-size:12px" id="btn-save-${id}" onclick="guardarTarjeta('${id}')">Guardar</button>
+      </div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+async function guardarTarjeta(id) {
+  const btn = document.getElementById('btn-save-' + id);
+  const obsVal = document.getElementById('obs-' + id)?.value || '';
+  const consVal = document.getElementById('cons-' + id)?.value || '';
+  btn.disabled = true;
+  btn.textContent = 'Guardando…';
+  try {
+    await callPA({ accion: 'actualizar', id: String(id), campo: 'Observaciones', valor: obsVal });
+    await callPA({ accion: 'actualizar', id: String(id), campo: 'OBSCONSEJO', valor: consVal });
+    btn.textContent = '✓ Guardado';
+    btn.style.background = '#2e7d32';
+    setTimeout(() => { btn.textContent = 'Guardar'; btn.style.background = ''; btn.disabled = false; }, 2000);
+    showToast('✅ Cambios guardados en SharePoint');
+  } catch(e) {
+    btn.textContent = 'Error';
+    btn.style.background = 'var(--red)';
+    setTimeout(() => { btn.textContent = 'Guardar'; btn.style.background = ''; btn.disabled = false; }, 2000);
+    showToast('⚠ Error al guardar: ' + e.message);
+  }
+}
+
+function toggleDetail(id) {
+  const d = document.getElementById('detail-' + id);
+  const ico = document.getElementById('icon-' + id);
+  const isOpen = d.classList.contains('open');
+  d.classList.toggle('open');
+  ico.textContent = isOpen ? '▶' : '▼';
+}
+
+async function updateEstado(id, nuevoEstado, sel) {
+  const item = allData.find(x => String(x.id || x.ID || x.Id) === String(id));
+  const estadoLabels = { enproceso: 'En proceso', terminada: 'Terminada' };
+  try {
+    await callPA({ accion: 'actualizar', id: parseInt(id), estado: estadoLabels[nuevoEstado] || nuevoEstado });
+    if (item) item._estado = nuevoEstado;
+    const badge = document.getElementById('badge-' + id);
+    const ei = estadoInfo(nuevoEstado);
+    if (badge) { badge.className = 'badge ' + ei.cls; badge.textContent = ei.label; }
+    const card = document.getElementById('card-' + id);
+    if (card) { card.className = 'card ' + cardClass(nuevoEstado); }
+    updateStats(allData);
+    showToast('✅ Estado actualizado');
+  } catch(e) {
+    showToast('⚠ Error: ' + e.message);
+  }
+}
+
+async function saveEdit(id, campo, valor) {
+  try {
+    await callPA({ accion: 'actualizar', id: parseInt(id), campo, valor });
+  } catch(e) {
+    showToast('⚠ Error al guardar: ' + e.message);
+  }
+}
+
+function openEmailModal(id, email, nombre) {
+  emailItemId = id;
+  document.getElementById('em-to').value = email || '';
+  document.getElementById('em-body').value =
+    `Estimado/a ${nombre},\n\nNos comunicamos con usted respecto a su carta enviada al Consejo de la Facultad.\n\n[Agregar resolución aquí]\n\nSaludos cordiales,\nDirección de Estudios\nFacultad de Ciencias Económicas y Empresariales · Uandes`;
+  document.getElementById('modal-email').classList.add('open');
+}
+
+function closeEmailModal() {
+  document.getElementById('modal-email').classList.remove('open');
+}
+
+async function sendEmail() {
+  const to = document.getElementById('em-to').value.trim();
+  const asunto = document.getElementById('em-asunto').value.trim();
+  const body = document.getElementById('em-body').value.trim();
+  if (!to || !asunto || !body) { showToast('⚠ Completa todos los campos'); return; }
+  try {
+    await callPA({ accion: 'correo', id: parseInt(emailItemId), para: to, asunto, mensaje: body });
+    closeEmailModal();
+    showToast('✅ Correo enviado correctamente');
+  } catch(e) {
+    showToast('⚠ Error al enviar: ' + e.message);
+  }
+}
+
+function openNewModal() {
+  document.getElementById('modal-new').classList.add('open');
+}
+function closeNewModal() {
+  document.getElementById('modal-new').classList.remove('open');
+}
+
+async function saveNew() {
+  const nombre = document.getElementById('nw-nombre').value.trim();
+  const apellidos = document.getElementById('nw-apellidos').value.trim();
+  const rut = document.getElementById('nw-rut').value.trim();
+  if (!nombre || !apellidos) { showToast('⚠ Nombre y apellidos son obligatorios'); return; }
+  try {
+    await callPA({
+      accion: 'nuevo',
+      Title: nombre,
+      APELLIDOS: apellidos,
+      field_1: rut,
+      'E_x002d_MAIL': document.getElementById('nw-email').value.trim(),
+      CARRERA: document.getElementById('nw-carrera').value,
+      PGA: document.getElementById('nw-pga').value,
+      REPROBADAS: document.getElementById('nw-rep').value,
+      SOLICITUD: document.getElementById('nw-solicitud').value.trim(),
+      OBSERVACION: document.getElementById('nw-obs').value.trim(),
+      ESTADO: 'Pendiente'
+    });
+    closeNewModal();
+    showToast('✅ Carta registrada correctamente');
+    loadData();
+  } catch(e) {
+    showToast('⚠ Error: ' + e.message);
+  }
+}
+
+function updateStats(data) {
+  const proc = data.filter(d => d._estado === 'enproceso').length;
+  const term = data.filter(d => d._estado === 'terminada').length;
+  document.getElementById('stats').innerHTML = [
+    [data.length, 'Total', ''],
+    [proc, 'En proceso', 'amber'],
+    [term, 'Terminadas', 'green'],
+  ].map(([n, l, c]) => `<div class="stat"><div class="stat-n ${c}">${n}</div><div class="stat-l">${l}</div></div>`).join('');
+  document.getElementById('tab-section').style.display = 'block';
+}
+
+function sortByName(arr) {
+  return [...arr].sort((a, b) => (a._nombre || '').localeCompare(b._nombre || '', 'es'));
+}
+
+function applySearch() {
+  const sv = document.getElementById('search-val').value.trim().toLowerCase();
+  let items = sv ? allData.filter(i =>
+    (i._nombre || '').toLowerCase().includes(sv) ||
+    (i.SOLICITUD || '').toLowerCase().includes(sv) ||
+    (i.CARRERA?.Value || i.CARRERA || '').toLowerCase().includes(sv)
+  ) : allData;
+  if (currentFilter !== 'todos') {
+    items = items.filter(d => d._estado === currentFilter);
+  }
+  renderCards(sortByName(items));
+}
+
+function filterTab(estado, el) {
+  currentFilter = estado;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const filtered = estado === 'todos' ? allData : allData.filter(d => d._estado === estado);
+  renderCards(sortByName(filtered));
+}
+
+async function diagnostico() {
+  const area = document.getElementById('cards-area');
+  area.innerHTML = '<div class="loading"><div class="spinner"></div>Llamando al flujo…</div>';
+  try {
+    const raw = await callPA({ accion: 'leer' });
+    const preview = JSON.stringify(raw, null, 2).slice(0, 2000);
+    area.innerHTML = `
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Respuesta raw del flujo PA:</div>
+        <pre style="font-size:11px;font-family:'IBM Plex Mono',monospace;background:#f4f4f4;padding:12px;border-radius:6px;overflow-x:auto;white-space:pre-wrap;max-height:400px;overflow-y:auto">${preview}</pre>
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn-primary" onclick="loadData()">↺ Cargar cartas</button>
+          <button class="btn-sec" onclick="loadDemo()">Ver ejemplo</button>
+        </div>
+      </div>`;
+  } catch(e) {
+    area.innerHTML = `<div class="empty"><div class="ico">⚠️</div><p style="color:#CE0019">${e.message}</p></div>`;
+  }
+}
+
+function loadDemo() {
+  allData = [
+    {id:1,_nombre:'Borja Velasco Swinburn',SOLICITUD:'Eximirse de intercambio obligatorio por motivos económicos','OBSERVACI\u00d3N':'En otras oportunidades hemos autorizado excepciones por razones económicas acreditadas',PGA:5.12,'N\u00b0 REP':1,CARRERA:'Int. Business',INGRESO:'202210',_estado:'enproceso','ESTADO_x0020_FINAL':'En proceso','E_x002d_MAIL':'bvelasco@miuandes.cl'},
+    {id:2,_nombre:'Pedro Agüero Ureta',SOLICITUD:'Autorización intercambio sin cumplir requisito','OBSERVACI\u00d3N':'Hemos solicitado que postulen cuando cumplan los requisitos',PGA:4.49,'N\u00b0 REP':7,CARRERA:'Ing. Comercial',INGRESO:'202210',_estado:'enproceso','ESTADO_x0020_FINAL':'En proceso','E_x002d_MAIL':'paguero@miuandes.cl'},
+    {id:3,_nombre:'María Jara Verdugo',SOLICITUD:'Rendir 3 exámenes en días diferentes','OBSERVACI\u00d3N':'No hemos tenido caso similar',PGA:5.01,'N\u00b0 REP':1,CARRERA:'Ing. Comercial',INGRESO:'202410',_estado:'terminada','ESTADO_x0020_FINAL':'Terminada','E_x002d_MAIL':'mjara@miuandes.cl'},
+  ];
+  updateStats(allData);
+  renderCards(sortByName(allData));
+  showToast('📋 Mostrando datos de ejemplo');
+}
+</script>
+</body>
+</html>
