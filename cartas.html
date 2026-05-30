@@ -300,10 +300,11 @@ function checkLogin() {
   }
 }
  
-// Auto-check si ya estaba autenticada en esta sesión
-if (sessionStorage.getItem('dia-auth') === '1') {
-  document.getElementById('login-screen').classList.add('hidden');
-}
+document.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('dia-auth') === '1') {
+    document.getElementById('login-screen').classList.add('hidden');
+  }
+});
  
 let allData = [];
 let currentFilter = 'todos';
@@ -641,3 +642,70 @@ function updateStats(data) {
   const term = data.filter(d => d._estado === 'terminada').length;
   document.getElementById('stats').innerHTML = [
     [data.length, 'Total', ''],
+    [proc, 'En proceso', 'amber'],
+    [term, 'Terminadas', 'green'],
+  ].map(([n, l, c]) => `<div class="stat"><div class="stat-n ${c}">${n}</div><div class="stat-l">${l}</div></div>`).join('');
+  document.getElementById('tab-section').style.display = 'block';
+}
+ 
+function sortByName(arr) {
+  return [...arr].sort((a, b) => (a._nombre || '').localeCompare(b._nombre || '', 'es'));
+}
+ 
+function applySearch() {
+  const sv = document.getElementById('search-val').value.trim().toLowerCase();
+  let items = sv ? allData.filter(i =>
+    (i._nombre || '').toLowerCase().includes(sv) ||
+    (i.SOLICITUD || '').toLowerCase().includes(sv) ||
+    (i.CARRERA?.Value || i.CARRERA || '').toLowerCase().includes(sv)
+  ) : allData;
+  if (currentFilter !== 'todos') {
+    items = items.filter(d => d._estado === currentFilter);
+  }
+  renderCards(sortByName(items));
+}
+ 
+function filterTab(estado, el) {
+  currentFilter = estado;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const filtered = estado === 'todos' ? allData : allData.filter(d => d._estado === estado);
+  renderCards(sortByName(filtered));
+}
+ 
+async function diagnostico() {
+  const area = document.getElementById('cards-area');
+  area.innerHTML = '<div class="loading"><div class="spinner"></div>Llamando al flujo…</div>';
+  try {
+    const raw = await callPA({ accion: 'leer' });
+    const preview = JSON.stringify(raw, null, 2).slice(0, 2000);
+    area.innerHTML = `
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Respuesta raw del flujo PA:</div>
+        <pre style="font-size:11px;font-family:'IBM Plex Mono',monospace;background:#f4f4f4;padding:12px;border-radius:6px;overflow-x:auto;white-space:pre-wrap;max-height:400px;overflow-y:auto">${preview}</pre>
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn-primary" onclick="loadData()">↺ Cargar cartas</button>
+          <button class="btn-sec" onclick="loadDemo()">Ver ejemplo</button>
+        </div>
+      </div>`;
+  } catch(e) {
+    area.innerHTML = `<div class="empty"><div class="ico">⚠️</div><p style="color:#CE0019">${e.message}</p></div>`;
+  }
+}
+ 
+function loadDemo() {
+  allData = [
+    {id:1,_nombre:'Borja Velasco Swinburn',SOLICITUD:'Eximirse de intercambio obligatorio por motivos económicos','OBSERVACI\u00d3N':'En otras oportunidades hemos autorizado excepciones por razones económicas acreditadas',PGA:5.12,'N\u00b0 REP':1,CARRERA:'Int. Business',INGRESO:'202210',_estado:'enproceso','ESTADO_x0020_FINAL':'En proceso','E_x002d_MAIL':'bvelasco@miuandes.cl'},
+    {id:2,_nombre:'Pedro Agüero Ureta',SOLICITUD:'Autorización intercambio sin cumplir requisito','OBSERVACI\u00d3N':'Hemos solicitado que postulen cuando cumplan los requisitos',PGA:4.49,'N\u00b0 REP':7,CARRERA:'Ing. Comercial',INGRESO:'202210',_estado:'enproceso','ESTADO_x0020_FINAL':'En proceso','E_x002d_MAIL':'paguero@miuandes.cl'},
+    {id:3,_nombre:'María Jara Verdugo',SOLICITUD:'Rendir 3 exámenes en días diferentes','OBSERVACI\u00d3N':'No hemos tenido caso similar',PGA:5.01,'N\u00b0 REP':1,CARRERA:'Ing. Comercial',INGRESO:'202410',_estado:'terminada','ESTADO_x0020_FINAL':'Terminada','E_x002d_MAIL':'mjara@miuandes.cl'},
+  ];
+  updateStats(allData);
+  renderCards(sortByName(allData));
+  showToast('📋 Mostrando datos de ejemplo');
+}
+</script>
+</body>
+</html>
+ 
+
+
